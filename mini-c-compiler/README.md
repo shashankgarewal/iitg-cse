@@ -1,16 +1,17 @@
-# Mini-C-compiler
+# Mini-C compiler
 
 Compiler for a C-like language. Converts the code to MIPS Assembly Language which can be run using SPIM.
 
-How to run
+# How to run
 $ ./cmd.sh
 
-Output files
+# Output files
 parse.txt : Parse Tree of the sample code
 
 asm.s : MIPS Assembly code
 
-Features of the Language
+# Features of the Language
+
 Data types : int, float, char, string, multidimensional array
 
 Variable Declaration
