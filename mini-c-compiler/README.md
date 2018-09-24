@@ -12,34 +12,34 @@ asm.s : MIPS Assembly code
 
 # Features of the Language
 
-Data types : int, float, char, string, multidimensional array
+* Data types : int, float, char, string, multidimensional array
 
-Variable Declaration
+* Variable Declaration
 
-Variable Assignment
+* Variable Assignment
 
-Function Declaration
+* Function Declaration
 
-Print on Console
+* Print on Console
 
-Logical Expressions involving '&&' and '||'
+* Logical Expressions involving '&&' and '||'
 
-Relational operators : '>', '<', '>=', '<=', '==', '<>', '!='
+* Relational operators : '>', '<', '>=', '<=', '==', '<>', '!='
 
-Arithmatic operators : '+', '-', '*', '/', '%', '++' , '--' 
+* Arithmatic operators : '+', '-', '*', '/', '%', '++' , '--' 
 
-Unary Operators : '+', '-'
+* Unary Operators : '+', '-'
 
-For Loop
+* For Loop
 
-While Loop
+* While Loop
 
-Switch statements
+* Switch statements
 
-Conditional statements
+* Conditional statements
 
-Nested code blocks
+* Nested code blocks
 
-break in loops
+* break in loops
 
-continue in loops
+* continue in loops
