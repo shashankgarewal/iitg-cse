@@ -1,0 +1,66 @@
+s -> epsilon
+s -> uif s
+other_than_if-> for_stmnt
+s -> epsilon
+s -> uif s
+other_than_if-> while_stmnt
+s -> epsilon
+s -> uif s
+s -> epsilon
+s -> uif s
+s -> epsilon
+s -> mif s
+s -> uif s
+s -> uif s
+s -> uif s
+s -> uif s
+other_than_if-> for_stmnt
+s -> epsilon
+s -> uif s
+s -> uif s
+s -> epsilon
+s -> uif s
+s -> uif s
+s -> epsilon
+s -> mif s
+s -> uif s
+s -> uif s
+s -> uif s
+s -> uif s
+s -> uif s
+s -> uif s
+s -> uif s
+other_than_if-> for_stmnt
+s -> epsilon
+s -> uif s
+s -> uif s
+s -> uif s
+s -> uif s
+s -> uif s
+s -> uif s
+s -> uif s
+s -> epsilon
+s -> uif s
+s -> epsilon
+s -> uif s
+s -> epsilon
+s -> uif s
+s -> uif s
+s -> uif s
+s -> uif s
+s -> uif s
+s -> mif s
+other_than_if-> while_stmnt
+s -> epsilon
+s -> uif s
+s -> uif s
+s -> uif s
+s -> mif s
+other_than_if-> for_stmnt
+s -> epsilon
+s -> uif s
+s -> uif s
+s -> uif s
+s -> uif s
+s -> uif s
+s -> uif s
