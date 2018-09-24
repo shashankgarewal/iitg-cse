@@ -3,7 +3,7 @@
 Compiler for a C-like language. Converts the code to MIPS Assembly Language which can be run using SPIM.
 
 ## How to run
-$ ./cmd.sh
+$ ./cmd.sh < scope.c
 
 ## Output files
 parse.txt : Parse Tree of the sample code
