@@ -3,6 +3,7 @@ Relay based Peer-to-Peer System using Client-Server socket programming
 
 ## How to compile?
 $ cd src
+
 $ ./cmd.sh
 
 ## How to run?
