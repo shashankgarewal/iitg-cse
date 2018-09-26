@@ -1,0 +1,4 @@
+In general, when "Bad File Descriptor" is encountered, it means that the socket file descriptor you passed into the API is not valid, which has multiple possible reasons:
+
+The fd is already closed somewhere.
+The fd has a wrong value, which is inconsistent with the value obtained from socket() api
