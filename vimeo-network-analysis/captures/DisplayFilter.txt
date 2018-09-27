@@ -1,0 +1,97 @@
+Host: apis.google.com:443							Request URI: apis.google.com:443 HTTP/1.0
+Host: arc.msn.com:443								Request URI: arc.msn.com:443 HTTP/1.0
+Host: clients6.google.com:443\r\n					Request URI: clients6.google.com:443
+Host: clients5.google.com:443\r\n					Request URI: clients5.google.com:443
+Host: clients4.google.com:443\r\n					Request URI: clients4.google.com:443
+Host: ogs.google.com:443\r\n						Request URI: ogs.google.com:443
+Host: ssl.gstatic.com:443\r\n						Request URI: ssl.gstatic.com:443
+Host: 0.client-channel.google.com:443\r\n			Request URI: 0.client-channel.google.com:443
+Host: fonts.gstatic.com:443\r\n						Request URI: fonts.gstatic.com:443
+Host: notifications.google.com:443\r\n 				Request URI: notifications.google.com:443			
+Host: lh3.googleusercontent.com:443\r\n 			Request URI: lh3.googleusercontent.com:443
+Host: lh5.googleusercontent.com:443\r\n 			Request URI: lh5.googleusercontent.com:443
+
+Host: video-bom1-1.xx.fbcdn.net:443\r\n 			Request URI: video-bom1-1.xx.fbcdn.net:443
+Host: scontent-bom1-1.xx.fbcdn.net:443\r\n 			Request URI: scontent-bom1-1.xx.fbcdn.net:443
+Host: external-bom1-1.xx.fbcdn.net:443\r\n 			Request URI: external-bom1-1.xx.fbcdn.net:443
+Host: people-pa.clients6.google.com:443\r\n 		Request URI: people-pa.clients6.google.com:443
+
+HTTP/1.1 407 Proxy Authentication Required
+HTTP/1.1 200 Connection established
+
+
+TLSv1.2
+
+Proxy-Connect-Hostname: ssl.gstatic.com 					Proxy-Connect-Port: 443
+Proxy-Connect-Hostname: arc.msn.com 						Proxy-Connect-Port: 443
+Proxy-Connect-Hostname: clients6.google.com 				Proxy-Connect-Port: 443
+Proxy-Connect-Hostname: clients5.google.com 				Proxy-Connect-Port: 443
+Proxy-Connect-Hostname: clients4.google.com 				Proxy-Connect-Port: 443
+Proxy-Connect-Hostname: ogs.google.com 						Proxy-Connect-Port: 443
+Proxy-Connect-Hostname: apis.google.com 					Proxy-Connect-Port: 443
+Proxy-Connect-Hostname: 0.client-channel.google.com 		Proxy-Connect-Port: 443
+Proxy-Connect-Hostname: fonts.gstatic.com:443\r\n	 		Proxy-Connect-Port: 443
+Proxy-Connect-Hostname: notifications.google.com:443\r\n  	Proxy-Connect-Port: 443
+Proxy-Connect-Hostname: lh3.googleusercontent.com:443\r\n 	Proxy-Connect-Port: 443
+Proxy-Connect-Hostname: lh5.googleusercontent.com:443\r\n 	Proxy-Connect-Port: 443
+
+tcp:
+ack 0x010
+syn 0x002
+syn,ack 0x012
+fin,ack 0x011
+rst,ack 0x014
+
+Final filter in build:
+for connecting and reloading of google hangouts (439-536)
+
+(((ip.src==10.0.2.58 and ip.dst==202.141.80.24) or (ip.dst==10.0.2.58 and ip.src==202.141.80.24)) and 
+(
+	((ssl.record.version == 0x0303 or ssl.record.version == 0x0301) and 
+		(
+			http.proxy_connect_host contains "hangouts" 
+		)
+	) or
+	(tcp.len==0 and (tcp.srcport == 49376 or tcp.dstport == 49376) and
+		(
+			tcp.flags == 0x010 or tcp.flags == 0x002 or tcp.flags == 0x012 or tcp.flags == 0x011
+		) 
+	) or		 
+	(
+			http.host contains "hangouts"	
+	) or 
+	(http.response.code==200 and (tcp.srcport == 49376 or tcp.dstport == 49376) )
+)
+)
+
+for video,voice,chat,sending request (26167-26245)
+
+(((ip.src==10.0.2.58 and ip.dst==202.141.80.24) or (ip.dst==10.0.2.58 and ip.src==202.141.80.24)) and 
+(
+	((ssl.record.version == 0x0303 or ssl.record.version == 0x0301) and 
+		(tcp.srcport == 52719 or tcp.dstport == 52719) and 
+		(
+			http.proxy_connect_host contains "google" 
+		)
+	) or
+	(tcp.len==0 and (tcp.srcport == 52719 or tcp.dstport == 52719) and
+		(
+			tcp.flags == 0x010 or tcp.flags == 0x002 or tcp.flags == 0x012 or tcp.flags == 0x011
+		) 
+	) or		 
+	(
+			http.host contains "google"	
+	) or 
+	(http.response.code==200 and (tcp.srcport == 52719 or tcp.dstport == 52719))
+)
+)
+
+termination (16696-16699)
+
+(tcp.srcport == 52716 or tcp.dstport == 52719) and
+52672  google hangout connection
+52719  google hangout services
+
+49376 google hangout connection
+49470 google hangout services
+
