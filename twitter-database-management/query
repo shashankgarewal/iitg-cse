@@ -1,0 +1,51 @@
+	FOREACH (tag IN tdata.hashtags | MERGE (hashtag:Hashtag {name:tag}) MERGE (tweet)-[:tags]->(hashtag))
+	FOREACH (key IN tdata.keywords_processed_list | MERGE (keyword:Keyword {name:key}) MERGE (tweet)-[:key_contain]->(keyword))
+	FOREACH (mention IN tdata.mentions | MERGE (men:Mention {name:mention}) MERGE (tweet)-[:MENTIONS]->(men))
+	FOREACH (list IN tdata.url_list | MERGE (url:Link {name:list}) MERGE (tweet)-[:contains]->(url))
+
+
+	WITH user,tweet,tdata
+	MATCH (user)-[:POST]->(tweet) where tweet.type="retweet"
+		MERGE (tweet2:Tweet {tid:tdata.retweet_source_id})
+			CREATE (tweet)-[:RETWEET]->(tweet2)
+	WITH user,tweet,tdata
+	MATCH (user)-[:POST]->(tweet) where tweet.type="Reply"
+		MERGE (tweet3:Tweet {tid:tdata.replyto_source_id})
+			CREATE (tweet)-[:REPLYTO]->(tweet3)
+	MERGE (loc:location {name:"0"})
+		ON CREATE SET loc.name = tdata.location
+		ON MATCH SET loc.name = tdata.location
+	MERGE (tweet)-[:LOCATION]->(loc)	
+
+
+	WHEN 'y' THEN
+		MATCH (user)-[:POST]->(tweet) where tweet.type="retweet" MERGE (tweet)-[:RETWEET]->(tweet2:Tweet {tid:tdata.retweet_source_id}) RETURN 1
+	ELSE
+		MATCH (user)-[:POST]->(tweet) where tweet.type="Reply" MERGE (tweet)-[:REPLYTO]->(tweet3:Tweet {tid:tdata.replyto_source_id}) RETURN 2
+	END
+	FOREACH (ignoreMe IN CASE WHEN 'y' THEN [1] ELSE [] END | 
+		MERGE (tweet)-[:RETWEET]->(tweet2:Tweet {tid:tdata.retweet_source_id})
+	)
+	FOREACH(ignoreMe IN CASE WHEN NOT 'y' THEN [1] ELSE [] END | 
+		MERGE (tweet)-[:REPLYTO]->(tweet3:Tweet {tid:tdata.replyto_source_id})
+	)
+
+
+
+
+#query 1
+	match (u:User {author: "sarah✨"})-[:post]->(t:Tweet) return	t.tid
+#query 2
+	match (u:User {author: "HydroCarbon Woman"})-[:post]->(t:Tweet)-[:MENTIONS]->(m:Mention)  return m.name As mentions
+#query 3 
+	match (h1:Hashtag)<-[:tags]-(t:Tweet)-[:tags]->(h2:Hashtag) RETURN h1.name, h2.name,count(*) AS frequency ORDER BY frequency LIMIT 20
+#query 4
+	match (h1:Hashtag)<-[:tags]-(t:Tweet)-[]->(m:Mention)  RETURN h1.name, m.name,count(*) AS frequency ORDER BY frequency DESC LIMIT 20
+#query 5
+	match (:Tweet {location :"Canada"})-[:TAGS]->(h:Hashtag) RETURN h.name
+#query 6
+	match (u1:User)-[:POST]->(t1:Tweet)-[:RETWEET]->(t2:Tweet)<-[:POST]-(u2:User) RETURN COUNT(*) AS frequency,u1.author,u2.author ORDER BY frequency DESC
+#query 7
+	match (u1:User)-[:POST]->(t1:Tweet)-[:REPLYTO]->(t2:Tweet)<-[:POST]-(u2:User) RETURN COUNT(*) AS frequency,u1.author,u2.author ORDER BY frequency DESC
+#query 8
+	MATCH (:User {author :"selfresqingprncess"})-[:POST]->(t:Tweet)-[r]-() detach delete t, r
