@@ -18,6 +18,7 @@ Each project has been reconstructed into its respective directory using a clean,
 | 6 | [twitter-database-management](./twitter-database-management) | A **Database Management System** simulating core functionalities, schemas, and relational constraints of Twitter. |
 | 7 | [vimeo-network-analysis](./vimeo-network-analysis) | **Network Packet Analysis** of Vimeo video traffic streams to study packet delivery patterns and bandwidth demands. |
 | 8 | [vowel-recognition](./vowel-recognition) | A **Speech Processing & Recognition System** for identifying and classification of vowel sounds. |
+| 9 | [room-delivery-system](./room-delivery-system) | A **Java socket-based Client-Server Room Delivery System** with GUI client for placing and managing in-room food/item orders. |
 
 ---
 
